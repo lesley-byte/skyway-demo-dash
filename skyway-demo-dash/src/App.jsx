@@ -20,11 +20,11 @@ function App() {
 
   return (
     // Apply Tailwind classes for overall layout
-    <div className="text-3xl font-bold underline">
+    <div className="font-bold">
       {/* Header */}
-      <header className="bg-white shadow">
+      <Header className="shadow" />
         <Nav currentPage={currentPage} />
-      </header>
+     
 
       {/* Main content area with padding and flex-grow to take up available space */}
       <main className="flex-grow">
