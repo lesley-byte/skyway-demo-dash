@@ -6,6 +6,9 @@ import Contact from './components/Contact';
 import AdminDashboard from './components/AdminDashboard';
 import CustDashboard from './components/CustDashboard';
 import Home from './components/Home';
+import Error from './components/Error';
+import AdminLogin from './components/AdminLogin';
+import CustLogin from './components/CustLogin';
 
 const router = createBrowserRouter([
   {
@@ -16,10 +19,7 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Home />,
-      },
-      {
-        path: '/home',
-        element: <Home />,
+        index: true, // This marks it as the default child route of '/'
       },
       {
         path: '/about',
@@ -37,6 +37,16 @@ const router = createBrowserRouter([
         path: '/CustDashboard',
         element: <CustDashboard />,
       },
+      // Inside your router configuration
+{
+  path: '/AdminLogin',
+  element: <AdminLogin />,
+},
+{
+  path: '/CustLogin',
+  element: <CustLogin />,
+},
+
     ],
   }
 ]

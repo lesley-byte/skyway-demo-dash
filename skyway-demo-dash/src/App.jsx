@@ -19,14 +19,22 @@ function App() {
   }, [currentPage, setLastVisitedPage]);
 
   return (
-    <div>
-      <Header>
+    // Apply Tailwind classes for overall layout
+    <div className="text-3xl font-bold underline">
+      {/* Header */}
+      <header className="bg-white shadow">
         <Nav currentPage={currentPage} />
-      </Header>
-      <main>
+      </header>
+
+      {/* Main content area with padding and flex-grow to take up available space */}
+      <main className="flex-grow">
         <Page currentPage={currentPage} />
       </main>
-      <Footer />
+
+      {/* Footer */}
+      <footer className="bg-white">
+        <Footer />
+      </footer>
     </div>
   );
 }
