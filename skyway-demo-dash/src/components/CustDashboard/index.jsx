@@ -1,24 +1,43 @@
-function CustDashboard() {
-  // Mock data for drone fleets
-  const droneFleets = [
-    { fleetId: 'FD123', fleetName: 'Alpha', numberOfDrones: 10 },
-    { fleetId: 'FD124', fleetName: 'Bravo', numberOfDrones: 15 },
-    { fleetId: 'FD125', fleetName: 'Charlie', numberOfDrones: 8 },
-    // ... more fleets
-  ];
+import React, { useState, useEffect } from 'react';
+import { readCustomer } from '../../utils/localStorageCRUD'; // Adjust the import path as necessary
+
+function CustDashboard({ loggedInUsername }) {
+  const [customerFleets, setCustomerFleets] = useState([]);
+
+  // Retrieve the customer's fleets on component mount
+  useEffect(() => {
+    const customerData = readCustomer(loggedInUsername);
+    if (customerData && customerData.droneFleets) {
+      setCustomerFleets(customerData.droneFleets);
+    }
+  }, [loggedInUsername]); // Dependency array to ensure this runs only when the username changes
 
   return (
     <div className="flex flex-col justify-center items-center h-screen bg-gray-100 p-4">
       <p className="text-2xl font-bold text-gray-700 mb-6">Customer Dashboard</p>
       <div className="w-full max-w-4xl">
-        {/* Iterating over the droneFleets array to display each fleet as a card */}
-        {droneFleets.map((fleet, index) => (
-          <div key={index} className="bg-white mb-4 p-6 rounded-lg shadow-md flex justify-between items-center">
-            <span className="text-sm font-medium text-gray-800">Fleet ID: {fleet.fleetId}</span>
-            <span className="text-lg font-bold text-gray-900">{fleet.fleetName}</span>
-            <span className="text-sm font-medium text-gray-800">Drones: {fleet.numberOfDrones}</span>
-          </div>
-        ))}
+        {customerFleets.length > 0 ? (
+          customerFleets.map((fleet) => (
+            <div key={fleet.fleetId} className="bg-white mb-4 p-6 rounded-lg shadow-md">
+              <h3 className="text-lg font-bold text-gray-900">{fleet.fleetName}</h3>
+              <p className="text-sm font-medium text-gray-800">Fleet ID: {fleet.fleetId}</p>
+              <div>
+                <span className="text-sm font-medium text-gray-800">Drones: </span>
+                {fleet.drones.length > 0 ? (
+                  <ul>
+                    {fleet.drones.map((drone) => (
+                      <li key={drone.droneId}>{drone.droneId}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  <span>No drones assigned</span>
+                )}
+              </div>
+            </div>
+          ))
+        ) : (
+          <p>No fleets to display</p>
+        )}
       </div>
     </div>
   );

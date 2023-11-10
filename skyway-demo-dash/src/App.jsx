@@ -1,37 +1,19 @@
 import Header from './components/Header';
 import Nav from './components/Nav'; 
-import Page from './components/Page';
 import Footer from './components/Footer';
-
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
-import { useLocalStorage } from "./hooks/useLocalStorage"; // custom hook for local storage
+import { Outlet } from 'react-router-dom'; // Import Outlet
 
 function App() {
-  const currentPage = useLocation().pathname;
-
-  // Custom hook to interact with local storage
-  const [lastVisitedPage, setLastVisitedPage] = useLocalStorage('lastVisitedPage', '/');
-
-  // Update Local Storage when currentPage changes
-  useEffect(() => {
-    setLastVisitedPage(currentPage);
-  }, [currentPage, setLastVisitedPage]);
+  // The Outlet will render the current page component based on the route
+  // No need for useLocation or currentPage state
 
   return (
-    // Apply Tailwind classes for overall layout
     <div className="font-bold">
-      {/* Header */}
       <Header className="shadow" />
-        <Nav currentPage={currentPage} />
-     
-
-      {/* Main content area with padding and flex-grow to take up available space */}
+      <Nav /> {/* Nav will no longer receive currentPage as a prop */}
       <main className="flex-grow">
-        <Page currentPage={currentPage} />
+        <Outlet /> {/* Renders the matching child route */}
       </main>
-
-      {/* Footer */}
       <footer className="bg-white">
         <Footer />
       </footer>

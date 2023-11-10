@@ -1,11 +1,20 @@
+import React, { useState, useEffect } from 'react';
+import { getAllCustomers } from '../../utils/localStorageCRUD'; // Adjust the import path as necessary
+
 function AdminDashboard() {
-  // Mock data for customer details
-  const customerDetails = [
-    { name: 'Customer A', totalFleets: 3, totalDrones: 15 },
-    { name: 'Customer B', totalFleets: 5, totalDrones: 20 },
-    { name: 'Customer C', totalFleets: 4, totalDrones: 10 },
-    // ... add more customers as needed
-  ];
+  const [customers, setCustomers] = useState([]);
+
+  // Fetch all customer data on component mount
+  useEffect(() => {
+    const allCustomers = getAllCustomers();
+    // Transform the data into the needed format if necessary
+    const customerDetails = allCustomers.map(customer => ({
+      name: customer.customerName,
+      totalFleets: customer.droneFleets.length,
+      totalDrones: customer.droneFleets.reduce((acc, fleet) => acc + fleet.drones.length, 0),
+    }));
+    setCustomers(customerDetails);
+  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 py-8">
@@ -14,7 +23,7 @@ function AdminDashboard() {
       {/* Cards container */}
       <div className="w-full max-w-4xl px-4">
         {/* Cards for each customer */}
-        {customerDetails.map((customer, index) => (
+        {customers.map((customer, index) => (
           <div key={index} className="bg-white mb-6 p-6 rounded-lg shadow-lg">
             <h2 className="text-xl font-bold text-gray-800 mb-4">{customer.name}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

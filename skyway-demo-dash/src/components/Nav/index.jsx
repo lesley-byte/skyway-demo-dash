@@ -1,11 +1,13 @@
-import { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { capitalizeFirstLetter } from '../../utils/helpers';
+import { useState, useRef, useEffect, useContext } from 'react';
+import { NavLink } from 'react-router-dom';
+import { UserContext } from '../../contexts/UserContext'; // Assuming you have a UserContext
+import { useNavigate } from 'react-router-dom';
 
-function Nav({ currentPage }) {
+function Nav() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const dropdownRef = useRef(null); // Ref for the dropdown container
-  const pages = ['AdminDashboard', 'contact', 'CustDashboard', 'about'];
+  const dropdownRef = useRef(null);
+  const { user, setUser, isAdmin, setIsAdmin } = useContext(UserContext); // Using useContext to access user and isAdmin state
+
 
   // Function to toggle dropdown visibility
   const toggleDropdown = () => setDropdownOpen(prev => !prev);
@@ -17,6 +19,22 @@ function Nav({ currentPage }) {
     }
   };
 
+const navigate = useNavigate();
+
+    // Logout function
+  const logout = () => {
+    // Remove user-related data from local storage or cookies
+    localStorage.removeItem('user');
+    localStorage.removeItem('isAdmin');
+
+    // Update context
+    setUser(null);
+    setIsAdmin(false);
+
+    // Redirect to the home page or login page
+    navigate('/'); // Adjust the path as needed
+  };
+
   useEffect(() => {
     // Attach an event listener to the document
     document.addEventListener('mousedown', handleClickOutside);
@@ -26,43 +44,112 @@ function Nav({ currentPage }) {
     };
   }, []);
 
-  return (
+ return (
     <nav className="bg-blue-800 text-white p-3 shadow-md">
       <ul className="flex justify-between items-center">
-        {/* Home link */}
-        <li className={`mx-2 hover:bg-blue-700 p-2 rounded ${currentPage === '/' ? 'bg-blue-700' : ''}`}>
-          <Link to="/" className="hover:text-gray-300 text-lg">Home</Link>
-        </li>
-        {/* Other navigation links */}
-        {pages.map((page) => (
-          <li
-            className={`mx-2 hover:bg-blue-700 p-2 rounded ${currentPage === `/${page.toLowerCase()}` ? 'bg-blue-700' : ''}`}
-            key={page}
+        <li className="mx-2">
+          <NavLink
+            to="/"
+            className={({ isActive }) => isActive ? "bg-blue-700 p-2 rounded text-lg" : "hover:bg-blue-700 p-2 rounded text-lg"}
           >
-            <Link to={`/${page.toLowerCase()}`} className="hover:text-gray-300 text-lg">{capitalizeFirstLetter(page)}</Link>
+            Home
+          </NavLink>
+        </li>
+        
+        {user && isAdmin && (
+          <li className="mx-2">
+            <NavLink
+              to="/AdminDashboard"
+              className={({ isActive }) => isActive ? "bg-blue-700 p-2 rounded text-lg" : "hover:bg-blue-700 p-2 rounded text-lg"}
+            >
+              Admin Dashboard
+            </NavLink>
           </li>
-        ))}
-        {/* Dropdown Menu Item */}
-        <li className="mx-2 relative">
-          <button
-            type="button"
-            onClick={toggleDropdown}
-            className="hover:bg-blue-700 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-300 text-lg"
-            aria-haspopup="true"
-            aria-expanded={dropdownOpen}
+        )}
+
+        {user && !isAdmin && (
+          <li className="mx-2">
+            <NavLink
+              to="/CustDashboard"
+              className={({ isActive }) => isActive ? "bg-blue-700 p-2 rounded text-lg" : "hover:bg-blue-700 p-2 rounded text-lg"}
+            >
+              Customer Dashboard
+            </NavLink>
+          </li>
+        )}
+
+        <li className="mx-2">
+          <NavLink
+            to="/about"
+            className={({ isActive }) => isActive ? "bg-blue-700 p-2 rounded text-lg" : "hover:bg-blue-700 p-2 rounded text-lg"}
           >
-            Login
-          </button>
-          {dropdownOpen && (
-            <div className="dropdown-menu absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-50">
-              <Link to="/AdminLogin" className="block px-4 py-2 text-sm text-gray-800 hover:bg-blue-100">Admin Login</Link>
-              <Link to="/CustLogin" className="block px-4 py-2 text-sm text-gray-800 hover:bg-blue-100">Customer Login</Link>
-            </div>
-          )}
+            About
+          </NavLink>
         </li>
+
+        <li className="mx-2">
+          <NavLink
+            to="/contact"
+            className={({ isActive }) => isActive ? "bg-blue-700 p-2 rounded text-lg" : "hover:bg-blue-700 p-2 rounded text-lg"}
+          >
+            Contact
+          </NavLink>
+        </li>
+
+        {!user && (
+          <li className="mx-2 relative">
+            <button
+              onClick={toggleDropdown}
+              className="hover:bg-blue-700 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-300 text-lg"
+              aria-haspopup="true"
+              aria-expanded={dropdownOpen}
+            >
+              Login/Signup
+            </button>
+            {dropdownOpen && (
+              <div ref={dropdownRef} className="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-50">
+                <NavLink
+                  to="/adminLogin"
+                  className={({ isActive }) => isActive ? "block px-4 py-2 text-sm text-gray-800 bg-blue-100" : "block px-4 py-2 text-sm text-gray-800 hover:bg-blue-100"}
+                >
+                  Admin Login
+                </NavLink>
+                <NavLink
+                  to="/custLogin"
+                  className={({ isActive }) => isActive ? "block px-4 py-2 text-sm text-gray-800 bg-blue-100" : "block px-4 py-2 text-sm text-gray-800 hover:bg-blue-100"}
+                >
+                  Customer Login
+                </NavLink>
+                <NavLink
+                  to="/signup"
+                  className={({ isActive }) => isActive ? "block px-4 py-2 text-sm text-gray-800 bg-blue-100" : "block px-4 py-2 text-sm text-gray-800 hover:bg-blue-100"}
+                >
+                  Sign Up
+                </NavLink>
+              </div>
+            )}
+          </li>
+        )}
+
+        {user && (
+          <li className="mx-2">
+            <button
+              onClick={logout}
+              className="hover:bg-blue-700 p-2 rounded text-lg"
+            >
+              Logout
+            </button>
+          </li>
+        )}
       </ul>
     </nav>
   );
+}
+
+
+// Helper function outside of the component
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 export default Nav;

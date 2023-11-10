@@ -1,7 +1,7 @@
 function Error () {
   return (
     <div className="error">
-      <p>Error Page</p>
+      <p>Error Page.  Something went wrong.</p>
     </div>
   )
 }

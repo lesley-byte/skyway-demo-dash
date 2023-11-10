@@ -1,30 +1,41 @@
-import React, { useState } from 'react';
-// Import other necessary libraries or components
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../contexts/UserContext';
 
 function AdminLogin() {
-  // State for login form (if needed)
   const [credentials, setCredentials] = useState({ username: '', password: '' });
+  const [loginError, setLoginError] = useState('');
+  const navigate = useNavigate();
+  const { setUser, setIsAdmin } = useContext(UserContext);
 
-  // Handle form input changes
   const handleChange = (event) => {
     const { name, value } = event.target;
     setCredentials(prevState => ({ ...prevState, [name]: value }));
   };
 
-  // Handle form submission
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Perform login logic for admin
+    if (credentials.username === 'admin' && credentials.password === 'password') {
+      // Here you should usually call your backend service for authentication
+      // For the purposes of this example, we'll just simulate successful login
+
+      // Set the user context state as logged in
+      setUser(credentials.username);
+      setIsAdmin(true);
+
+      // Redirect to the admin dashboard
+      navigate('/AdminDashboard');
+    } else {
+      setLoginError('Invalid username or password.');
+    }
   };
 
   return (
-    // Centering the card container on the screen
-<div className="w-full flex justify-center items-center h-screen bg-gray-100">
-  {/* Card container with rounded border, shadow, and padding */}
-  <div className="w-full max-w-xs bg-white rounded-lg shadow-md p-8">
+    <div className="w-full flex justify-center items-center h-screen bg-gray-100">
+      <div className="w-full max-w-xs bg-white rounded-lg shadow-md p-8">
         <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
           <h1 className="text-center text-2xl font-bold">Admin Login</h1>
-          {/* Input fields for username and password with styling */}
+          {loginError && <p className="text-center text-red-500">{loginError}</p>}
           <input
             type="text"
             name="username"
@@ -41,7 +52,6 @@ function AdminLogin() {
             placeholder="Password"
             className="p-2 border rounded-lg"
           />
-          {/* Login button with styling */}
           <button type="submit" className="p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
             Login
           </button>
