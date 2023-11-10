@@ -1,7 +1,7 @@
 function About() {
   return (
     // Flex container to center the content vertically and horizontally
-    <div className="flex justify-center items-center h-screen bg-gray-100">
+    <div className="flex justify-center items-center h-screen overflow-auto bg-gray-100">
       {/* Max width container with padding and margin auto for horizontal centering */}
       <div className="w-full max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
         {/* Typography styling for the heading */}

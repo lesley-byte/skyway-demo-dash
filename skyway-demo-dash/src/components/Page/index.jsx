@@ -12,9 +12,8 @@ function Page({ currentPage }) {
   }, [currentPage]);
 
   return (
-    <section>
-      <h1>Page</h1>
-      <h2>{capitalizeFirstLetter(currentPage)} Page Page </h2>
+    <section className="p-4 overflow-auto ">
+      <h2>{capitalizeFirstLetter(currentPage)} Page </h2>
 
       <PageContent>
         <Outlet />

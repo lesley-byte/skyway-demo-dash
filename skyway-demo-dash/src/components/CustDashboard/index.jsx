@@ -1,7 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import FleetManager from '../FleetManager'; // Adjust the import path as necessary
 import { readCustomer } from '../../utils/localStorageCRUD'; // Adjust the import path as necessary
+import { UserContext } from '../../contexts/UserContext';
 
-function CustDashboard({ loggedInUsername }) {
+
+function CustDashboard() {
+  const { user } = useContext(UserContext);
+  const loggedInUsername = user?.userName;
   const [customerFleets, setCustomerFleets] = useState([]);
 
   // Retrieve the customer's fleets on component mount
@@ -13,8 +18,9 @@ function CustDashboard({ loggedInUsername }) {
   }, [loggedInUsername]); // Dependency array to ensure this runs only when the username changes
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen bg-gray-100 p-4">
+    <div className="flex flex-col justify-center items-center h-screen overflow-auto bg-gray-100 p-4">
       <p className="text-2xl font-bold text-gray-700 mb-6">Customer Dashboard</p>
+      <h2> Hello, {loggedInUsername}! </h2>
       <div className="w-full max-w-4xl">
         {customerFleets.length > 0 ? (
           customerFleets.map((fleet) => (

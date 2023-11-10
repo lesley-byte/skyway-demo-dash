@@ -38,49 +38,52 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
-      <form onSubmit={handleSignup} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <input
-          type="text"
-          name="customerName"
-          value={newCustomer.customerName}
-          onChange={handleChange}
-          placeholder="Full Name"
-          required
-          className="mb-4 p-3 rounded bg-gray-200"
-        />
-        <input
-          type="text"
-          name="userName"
-          value={newCustomer.userName}
-          onChange={handleChange}
-          placeholder="Username"
-          required
-          className="mb-4 p-3 rounded bg-gray-200"
-        />
-        <input
-          type="email"
-          name="email"
-          value={newCustomer.email}
-          onChange={handleChange}
-          placeholder="Email"
-          required
-          className="mb-4 p-3 rounded bg-gray-200"
-        />
-        <input
-          type="password"
-          name="password"
-          value={newCustomer.password}
-          onChange={handleChange}
-          placeholder="Password"
-          required
-          className="mb-4 p-3 rounded bg-gray-200"
-        />
-        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-          Sign Up
-        </button>
-        {signupError && <p className="text-red-500 text-xs italic">{signupError}</p>}
-      </form>
+    <div className="flex justify-center items-center h-screen overflow-auto bg-gray-100">
+      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
+        <form onSubmit={handleSignup} className="flex flex-col space-y-4">
+          <h1 className="text-center text-2xl font-bold">Sign Up</h1>
+          {signupError && <p className="text-center text-red-500">{signupError}</p>}
+          <input
+            type="text"
+            name="customerName"
+            value={newCustomer.customerName}
+            onChange={handleChange}
+            placeholder="Full Name"
+            required
+            className="p-2 border rounded-lg"
+          />
+          <input
+            type="text"
+            name="userName"
+            value={newCustomer.userName}
+            onChange={handleChange}
+            placeholder="Username"
+            required
+            className="p-2 border rounded-lg"
+          />
+          <input
+            type="email"
+            name="email"
+            value={newCustomer.email}
+            onChange={handleChange}
+            placeholder="Email"
+            required
+            className="p-2 border rounded-lg"
+          />
+          <input
+            type="password"
+            name="password"
+            value={newCustomer.password}
+            onChange={handleChange}
+            placeholder="Password"
+            required
+            className="p-2 border rounded-lg"
+          />
+          <button type="submit" className="p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+            Sign Up
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

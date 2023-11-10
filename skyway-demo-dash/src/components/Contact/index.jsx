@@ -1,7 +1,7 @@
 function Contact() {
   return (
     // Centering the card container on the screen
-    <div className="flex justify-center items-center h-screen bg-gray-100">
+    <div className="flex justify-center items-center h-screen overflow-auto bg-gray-100">
       {/* Card container with rounded border, shadow, and padding */}
       <div className="w-full max-w-md mx-auto bg-white rounded-lg shadow-md p-8">
         <form className="flex flex-col space-y-4">

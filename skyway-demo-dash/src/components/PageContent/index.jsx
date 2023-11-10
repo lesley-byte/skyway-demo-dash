@@ -1,6 +1,6 @@
 const PageContent = (props) => {
   return (
-    <div>
+    <div className="bg-white shadow-md rounded-lg p-4 overflow-auto ">
       {props.children}
     </div>
   );
