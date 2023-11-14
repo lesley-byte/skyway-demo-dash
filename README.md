@@ -18,6 +18,10 @@ To access the Admin Portal, use the following credentials:
 
 _Note: These credentials are for demonstration purposes only and should not be used in a production environment._
 
+## Link to Deployed site
+
+[https://6552c4f1b87ef94d750a2fe1--nimble-croquembouche-3c28c7.netlify.app/](https://6552c4f1b87ef94d750a2fe1--nimble-croquembouche-3c28c7.netlify.app/)
+
 ## Screenshots
 
 Include the descriptions and paths of your screenshots here. For example:
@@ -48,11 +52,36 @@ Provide instructions on how to install and set up the project locally. For examp
    npm install
    ```
 
-4. Run the application:
+4. Build the application:
 
    ```bash
-   npm start
+   npm run build
+   ```   
+
+5. Build the Tailwind CSS file:
+
+   ```bash
+   npm run build:css
    ```
+
+6. Run the application:
+
+   ```bash
+   npm run start
+   ```
+7. Open the application in your browser:
+
+   ```bash
+   http://localhost:3000
+   ```
+
+## Deploying to Netlify
+
+1. Create a new site in Netlify.
+
+2. Drag and drop the `dist` folder into the Netlify deploy window.
+
+3. Click `Deploy site`.
 
 ## Technologies Used
 
