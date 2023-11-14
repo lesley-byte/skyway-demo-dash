@@ -44,8 +44,8 @@ function Nav() {
   }, []);
 
   return (
-    <nav className="bg-blue-800 text-white p-3 shadow-md">
-      <ul className="flex justify-between items-center">
+<nav className="bg-blue-800 text-white p-3 shadow-md">
+  <ul className="flex flex-col md:flex-row justify-between items-center">
         <li className="mx-2">
           <NavLink
             to="/"
@@ -80,8 +80,8 @@ function Nav() {
               to="/AdminDashboard"
               className={({ isActive }) =>
                 isActive
-                  ? "bg-blue-700 p-2 rounded text-lg"
-                  : "hover:bg-blue-700 p-2 rounded text-lg"
+                ? "bg-blue-700 p-2 rounded text-lg"
+                : "hover:bg-blue-700 p-2 rounded text-lg md:text-base"
               }
             >
               Admin Dashboard
@@ -95,8 +95,8 @@ function Nav() {
               to="/CustDashboard"
               className={({ isActive }) =>
                 isActive
-                  ? "bg-blue-700 p-2 rounded text-lg"
-                  : "hover:bg-blue-700 p-2 rounded text-lg"
+                ? "bg-blue-700 p-2 rounded text-lg"
+                : "hover:bg-blue-700 p-2 rounded text-lg md:text-base"
               }
             >
               Customer Dashboard
@@ -109,8 +109,8 @@ function Nav() {
               to="/FleetManager"
               className={({ isActive }) =>
                 isActive
-                  ? "bg-blue-700 p-2 rounded text-lg"
-                  : "hover:bg-blue-700 p-2 rounded text-lg"
+                ? "bg-blue-700 p-2 rounded text-lg"
+                : "hover:bg-blue-700 p-2 rounded text-lg md:text-base"
               }
             >
               Fleet Manager
@@ -123,8 +123,8 @@ function Nav() {
             to="/about"
             className={({ isActive }) =>
               isActive
-                ? "bg-blue-700 p-2 rounded text-lg"
-                : "hover:bg-blue-700 p-2 rounded text-lg"
+              ? "bg-blue-700 p-2 rounded text-lg"
+              : "hover:bg-blue-700 p-2 rounded text-lg md:text-base"
             }
           >
             About
@@ -136,8 +136,8 @@ function Nav() {
             to="/contact"
             className={({ isActive }) =>
               isActive
-                ? "bg-blue-700 p-2 rounded text-lg"
-                : "hover:bg-blue-700 p-2 rounded text-lg"
+              ? "bg-blue-700 p-2 rounded text-lg"
+              : "hover:bg-blue-700 p-2 rounded text-lg md:text-base"
             }
           >
             Contact

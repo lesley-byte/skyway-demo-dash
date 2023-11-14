@@ -20,7 +20,7 @@ _Note: These credentials are for demonstration purposes only and should not be u
 
 ## Link to Deployed site
 
-[https://6552c4f1b87ef94d750a2fe1--nimble-croquembouche-3c28c7.netlify.app/](https://6552c4f1b87ef94d750a2fe1--nimble-croquembouche-3c28c7.netlify.app/)
+[https://nimble-croquembouche-3c28c7.netlify.app/](https://nimble-croquembouche-3c28c7.netlify.app/)
 
 ## Screenshots
 
