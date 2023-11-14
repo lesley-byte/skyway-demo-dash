@@ -4,6 +4,7 @@ import { UserContext } from "../../contexts/UserContext"; // Assuming you have a
 import { useNavigate } from "react-router-dom";
 
 function Nav() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const { user, setUser, isAdmin, setIsAdmin } = useContext(UserContext); // Using useContext to access user and isAdmin state
@@ -44,167 +45,185 @@ function Nav() {
   }, []);
 
   return (
-<nav className="bg-blue-800 text-white p-3 shadow-md">
-  <ul className="flex flex-col md:flex-row justify-between items-center">
-        <li className="mx-2">
-          <NavLink
-            to="/"
-            className={({ isActive }) =>
-              isActive
-                ? "bg-blue-700 p-2 rounded text-lg flex items-center"
-                : "hover:bg-blue-700 p-2 rounded text-lg flex items-center"
-            }
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              width="48"
-              height="48"
-              className="flex-shrink-0"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
-              />
-            </svg>
-          </NavLink>
-        </li>
-
-        {user && isAdmin && (
+    <nav className="bg-blue-800 text-white p-3 shadow-md">
+      <div className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="w-6 h-6"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+          />
+        </svg>
+      </div>
+      <div className={`${isMenuOpen ? "block" : "hidden"} md:flex`}>
+        <ul className="flex flex-col md:flex-row justify-between items-center">
           <li className="mx-2">
             <NavLink
-              to="/AdminDashboard"
+              to="/"
               className={({ isActive }) =>
                 isActive
-                ? "bg-blue-700 p-2 rounded text-lg"
-                : "hover:bg-blue-700 p-2 rounded text-lg md:text-base"
+                  ? "bg-blue-700 p-2 rounded text-lg flex items-center"
+                  : "hover:bg-blue-700 p-2 rounded text-lg flex items-center"
               }
             >
-              Admin Dashboard
-            </NavLink>
-          </li>
-        )}
-
-        {user && !isAdmin && (
-          <li className="mx-2">
-            <NavLink
-              to="/CustDashboard"
-              className={({ isActive }) =>
-                isActive
-                ? "bg-blue-700 p-2 rounded text-lg"
-                : "hover:bg-blue-700 p-2 rounded text-lg md:text-base"
-              }
-            >
-              Customer Dashboard
-            </NavLink>
-          </li>
-        )}
-        {user && !isAdmin && (
-          <li className="mx-2">
-            <NavLink
-              to="/FleetManager"
-              className={({ isActive }) =>
-                isActive
-                ? "bg-blue-700 p-2 rounded text-lg"
-                : "hover:bg-blue-700 p-2 rounded text-lg md:text-base"
-              }
-            >
-              Fleet Manager
-            </NavLink>
-          </li>
-        )}
-
-        <li className="mx-2">
-          <NavLink
-            to="/about"
-            className={({ isActive }) =>
-              isActive
-              ? "bg-blue-700 p-2 rounded text-lg"
-              : "hover:bg-blue-700 p-2 rounded text-lg md:text-base"
-            }
-          >
-            About
-          </NavLink>
-        </li>
-
-        <li className="mx-2">
-          <NavLink
-            to="/contact"
-            className={({ isActive }) =>
-              isActive
-              ? "bg-blue-700 p-2 rounded text-lg"
-              : "hover:bg-blue-700 p-2 rounded text-lg md:text-base"
-            }
-          >
-            Contact
-          </NavLink>
-        </li>
-
-        {!user && (
-          <li className="mx-2 relative">
-            <button
-              onClick={toggleDropdown}
-              className="hover:bg-blue-700 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-300 text-lg"
-              aria-haspopup="true"
-              aria-expanded={dropdownOpen}
-            >
-              Login/Signup
-            </button>
-            {dropdownOpen && (
-              <div
-                ref={dropdownRef}
-                className="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-50"
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                width="48"
+                height="48"
+                className="flex-shrink-0"
               >
-                <NavLink
-                  to="/adminLogin"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "block px-4 py-2 text-sm text-gray-800 bg-blue-100"
-                      : "block px-4 py-2 text-sm text-gray-800 hover:bg-blue-100"
-                  }
-                >
-                  Admin Login
-                </NavLink>
-                <NavLink
-                  to="/custLogin"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "block px-4 py-2 text-sm text-gray-800 bg-blue-100"
-                      : "block px-4 py-2 text-sm text-gray-800 hover:bg-blue-100"
-                  }
-                >
-                  Customer Login
-                </NavLink>
-                <NavLink
-                  to="/signup"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "block px-4 py-2 text-sm text-gray-800 bg-blue-100"
-                      : "block px-4 py-2 text-sm text-gray-800 hover:bg-blue-100"
-                  }
-                >
-                  Sign Up
-                </NavLink>
-              </div>
-            )}
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
+                />
+              </svg>
+            </NavLink>
           </li>
-        )}
 
-        {user && (
+          {user && isAdmin && (
+            <li className="mx-2">
+              <NavLink
+                to="/AdminDashboard"
+                className={({ isActive }) =>
+                  isActive
+                    ? "bg-blue-700 p-2 rounded text-lg"
+                    : "hover:bg-blue-700 p-2 rounded text-lg md:text-base"
+                }
+              >
+                Admin Dashboard
+              </NavLink>
+            </li>
+          )}
+
+          {user && !isAdmin && (
+            <li className="mx-2">
+              <NavLink
+                to="/CustDashboard"
+                className={({ isActive }) =>
+                  isActive
+                    ? "bg-blue-700 p-2 rounded text-lg"
+                    : "hover:bg-blue-700 p-2 rounded text-lg md:text-base"
+                }
+              >
+                Customer Dashboard
+              </NavLink>
+            </li>
+          )}
+          {user && !isAdmin && (
+            <li className="mx-2">
+              <NavLink
+                to="/FleetManager"
+                className={({ isActive }) =>
+                  isActive
+                    ? "bg-blue-700 p-2 rounded text-lg"
+                    : "hover:bg-blue-700 p-2 rounded text-lg md:text-base"
+                }
+              >
+                Fleet Manager
+              </NavLink>
+            </li>
+          )}
+
           <li className="mx-2">
-            <button
-              onClick={logout}
-              className="hover:bg-blue-700 p-2 rounded text-lg"
+            <NavLink
+              to="/about"
+              className={({ isActive }) =>
+                isActive
+                  ? "bg-blue-700 p-2 rounded text-lg"
+                  : "hover:bg-blue-700 p-2 rounded text-lg md:text-base"
+              }
             >
-              Logout
-            </button>
+              About
+            </NavLink>
           </li>
-        )}
-      </ul>
+
+          <li className="mx-2">
+            <NavLink
+              to="/contact"
+              className={({ isActive }) =>
+                isActive
+                  ? "bg-blue-700 p-2 rounded text-lg"
+                  : "hover:bg-blue-700 p-2 rounded text-lg md:text-base"
+              }
+            >
+              Contact
+            </NavLink>
+          </li>
+
+          {!user && (
+            <li className="mx-2 relative">
+              <button
+                onClick={toggleDropdown}
+                className="hover:bg-blue-700 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-300 text-lg"
+                aria-haspopup="true"
+                aria-expanded={dropdownOpen}
+              >
+                Login/Signup
+              </button>
+              {dropdownOpen && (
+                <div
+                  ref={dropdownRef}
+                  className="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-50"
+                >
+                  <NavLink
+                    to="/adminLogin"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "block px-4 py-2 text-sm text-gray-800 bg-blue-100"
+                        : "block px-4 py-2 text-sm text-gray-800 hover:bg-blue-100"
+                    }
+                  >
+                    Admin Login
+                  </NavLink>
+                  <NavLink
+                    to="/custLogin"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "block px-4 py-2 text-sm text-gray-800 bg-blue-100"
+                        : "block px-4 py-2 text-sm text-gray-800 hover:bg-blue-100"
+                    }
+                  >
+                    Customer Login
+                  </NavLink>
+                  <NavLink
+                    to="/signup"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "block px-4 py-2 text-sm text-gray-800 bg-blue-100"
+                        : "block px-4 py-2 text-sm text-gray-800 hover:bg-blue-100"
+                    }
+                  >
+                    Sign Up
+                  </NavLink>
+                </div>
+              )}
+            </li>
+          )}
+
+          {user && (
+            <li className="mx-2">
+              <button
+                onClick={logout}
+                className="hover:bg-blue-700 p-2 rounded text-lg"
+              >
+                Logout
+              </button>
+            </li>
+          )}
+        </ul>
+      </div>
     </nav>
   );
 }
